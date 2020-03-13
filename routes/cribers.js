@@ -1,16 +1,21 @@
 const express = require('express')
 const router = express.Router()
+const Criber = require('../models/criber')
 
-module.exports = router
 
 // Get all
-router.get('/', (req, res) => {
-    console.log("Hey")
-
+router.get('/', async(req, res) => {
+    try {
+        const cribers = await Criber.find()
+        res.json(cribers)
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
 })
 
 //One
 router.get('/:id', (req, res) => {
+    res.send(req.params.id)
 
 })
 
@@ -27,3 +32,5 @@ router.patch('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
 
 })
+
+module.exports = router;
